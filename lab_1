@@ -38,8 +38,8 @@ int main()
     cout << "Минимальное значение int: " <<  numeric_limits <int>::min() << endl;
     cout << "Максимальное значение int: " << numeric_limits <int>::max() << endl;
 
-    cout << "Минимальное значение float: " << numeric_limits <int>::min() << endl;
-    cout << "Максимальное значение float: " << numeric_limits <int>::max() << endl;
+    cout << "Минимальное значение float: " << -numeric_limits <float>::max() << endl;
+    cout << "Максимальное значение float: " << numeric_limits <float>::max() << endl;
 
     // ищем размер в битах
     cout << "Размер int в битах: " << sizeof(int) * 8 << endl;
