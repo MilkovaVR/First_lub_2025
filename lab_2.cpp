@@ -1,5 +1,4 @@
-﻿
-#include <iostream>
+﻿#include <iostream>
 #include <bitset>
 
 
@@ -25,7 +24,7 @@ int main() {
         return 1;
     }
     // Переводим в двоичную си и находим бит
-    bitset<16> b1 = (A);
+    bitset<8> b1 = (A);
     cout << A << " = " << b1 << endl;
     short bit = (A >> i) & 1;
     cout << "Значение " << i << " бита:" << bit << endl;
@@ -34,23 +33,49 @@ int main() {
     //Пункт 1:
     if (bit != 0) {
         int a, b;
-        cout << "Введите 2 числа: ";
+        cout << "Введите 2 числа (a и b): ";
         cin >> a >> b;
 
-        if (a % b == 0) {
-            bitset<16> b2 = (a/b);
-            cout << "Результат деления: " << a / b << " = " << b2 << endl;
+        if (b != 0) {
+            if (a % b == 0) {
+                cout << "Результат деления a на b: " << a / b << " = " << bitset<8>(a / b) << endl;
+            }
+            else { 
+                if (a != 0) {
+                    if (b % a == 0) {
+                        cout << "Результат деления b на a: " << b/a << " = " << bitset<8>(b/a) << endl;
+                    }
+                    else {
+                        cout << "Произведение a*b: " << a * b << " = " << bitset<8>(a * b) << endl;
+                    }
+                }
+                else {
+                    cout << "Произведение a*b: " << a * b << " = " << bitset<8>(a * b) << endl;
+                }
+                
+            }
         }
-        else {
-            bitset<16> b3 = (a*b);
-            cout << "Произведение: " << a * b << " = " << b3 << endl;
+        else { // т.е. b == 0
+            if (a == 0) {
+                cout << "Произведение a*b: " << a * b << " = " << bitset<8>(a * b) << endl;
+            }
+            else {// a != 0
+                cout << "Результат деления b на a: " << b / a << " = " << bitset<8>(b / a) << endl;
+            }
         }
     }
-    else { // i != 0, меняем биты на противоположные
-        A ^= (1 << (i + 1));
-        A ^= (1 << (i - 1));
 
-        bitset<16> b4 = (A);
+
+    else { // i != 0, меняем биты на противоположные
+        if (i != 0) {
+            A ^= (1 << (i + 1));
+            A ^= (1 << (i - 1));
+        }
+        else {
+            A ^= (1 << (i + 1));
+        }
+
+        bitset<8> b4 = (A);
         cout << "Измененное число: " << A << " = " << b4 << endl;
     }
 
@@ -59,6 +84,8 @@ int main() {
     int N;
     cout << "Введите число N: ";
     cin >> N;
+    bitset<8> b5 = (N);
+    cout << N << " = " << b5 << endl;
 
     switch (N) {
     case 1: cout << "Ошибка: Неисправность ЭБУ впрыска" << endl; break;
@@ -70,8 +97,8 @@ int main() {
     case 52: cout << "Ошибка: Неисправность работы ОЗУ" << endl; break;
     case 55: cout << "Ошибка: Слишком бедная смесь" << endl; break;
     case 61: cout << "Ошибка: Проблемы в работе датчика кислорода" << endl; break;
+    default: cout << "Выбор неверный." << endl; break;
     }
     return 0;
 }
-
 
