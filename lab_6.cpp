@@ -27,40 +27,38 @@ int* poisk_nol(int** matrix, int strok, int stolb, int& nol_stolb_count)
 // Функция удаления столбцов из матрицы
 int** delit_stolb(int** matrix, int strok, int& stolb, int* nol_stolb, int nol_stolb_count) 
 {
-    if (nol_stolb_count == 0) return matrix;
+    if (nol_stolb_count == 0) 
+    return matrix;
 
-    // Создаем новую матрицу с уменьшенным количеством столбцов
+    int* delete_flags = (int*)calloc(stolb, sizeof(int));
+    for (int i = 0; i < nol_stolb_count; i++) 
+    {
+        delete_flags[nol_stolb[i]] = 1;
+    }
     int new_stolb = stolb - nol_stolb_count;
-    int** newMatrix = (int**)malloc(strok * sizeof(int*));
-    
     for (int i = 0; i < strok; i++) 
     {
-        newMatrix[i] = (int*)malloc(new_stolb * sizeof(int));
-        int newJ = 0;
-        for (int j = 0; j <  stolb; j++) 
+        int new_j = 0;
+        for (int j = 0; j < stolb; j++) 
         {
-            bool isnol_stolb = false;
-            for (int k = 0; k < nol_stolb_count; k++) 
+            if (delete_flags[j] == 0) 
             {
-                if (j == nol_stolb[k]) 
-                {
-                    isnol_stolb = true;
-                    break;
-                }
-            }
-            if (!isnol_stolb) 
-            {
-                newMatrix[i][newJ++] = matrix[i][j];
+                matrix[i][new_j] = matrix[i][j];
+                new_j++;  
             }
         }
     }
-
-    // Освобождаем старую матрицу
-    for (int i = 0; i < strok; i++) free(matrix[i]);
-    free(matrix);
-
-    stolb = new_stolb; // Обновляем количество столбцов
-    return newMatrix;
+    for (int i = 0; i < strok; i++) 
+    {
+        int* new_row = (int*)realloc(matrix[i], new_stolb * sizeof(int));
+        if (new_row != NULL) 
+        {
+            matrix[i] = new_row;
+        }
+    }
+    free(delete_flags);
+    stolb = new_stolb;
+    return matrix;
 }
 
 
